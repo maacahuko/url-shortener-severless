@@ -1,56 +1,28 @@
-# Welcome to your Expo app 👋
+# URL Shortener — Serverless Edition
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A full-stack URL shortener built on a serverless AWS architecture, with a cross-platform mobile app frontend.
 
-## Get started
+The Live app which you can certainly try is: https://maacah-url-shortener.netlify.app
 
-1. Install dependencies
+## Architecture
 
-   ```bash
-   npm install
-   ```
+- **AWS API Gateway** — HTTP API exposing `POST /shorten` and `GET /{code}`
+- **AWS Lambda (Python)** — two functions: one to generate and store short codes, one to look up and redirect
+- **Amazon DynamoDB** — stores short code → original URL mappings
+- **Expo (React Native)** — mobile app frontend, also exported and deployed as a web app
+- **Netlify** — To host the web build of the app so that it can be used by anyone
 
-2. Start the app
+## How it works
 
-   ```bash
-   npx expo start
-   ```
+1. User pastes a long URL into the app and taps "Shorten"
+2. The app calls the API Gateway endpoint, which triggers a Lambda function
+3. The Lambda generates a random short code and saves it to DynamoDB
+4. Visiting the short link triggers a second Lambda that looks up the code and redirects to the original URL
 
-In the output, you'll find options to open the app in a
+## Tech stack
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+AWS Lambda · API Gateway · DynamoDB · Python · React Native (Expo) · Netlify
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## What I learned
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-### Other setup steps
-
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Built this to practice designing and wiring a serverless backend end-to-end (IAM roles, Lambda permissions, API Gateway routing) and connecting it to a real mobile frontend.
