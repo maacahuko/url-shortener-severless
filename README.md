@@ -4,6 +4,9 @@ A full-stack URL shortener built on a serverless AWS architecture, with a cross-
 
 The Live app which you can certainly try is: https://maacah-url-shortener.netlify.app
 
+##Demo 
+Watch it here: https://github.com/user-attachments/assets/f0009a5d-3fb6-4042-82d4-7980d5e371fc
+
 ## Architecture
 
 - **AWS API Gateway** — HTTP API exposing `POST /shorten` and `GET /{code}`
